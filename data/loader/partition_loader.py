@@ -29,7 +29,7 @@ def take_partitions(file_path, base_path):
     return {k: v for k, v in partitions_kv}
 
 
-def load_file(file_path, base_path, loader_function):
+def load_file(file_path, base_path, loader_function, ignore_partitions):
     """
      Merge the result of loading file with loader_function and the partitions
     :param file_path: path to the file which will be loaded
@@ -38,12 +38,15 @@ def load_file(file_path, base_path, loader_function):
     :return:
     """
     data = loader_function(file_path)
-    partitions = take_partitions(file_path, base_path)
 
-    return {**partitions, **data}
+    if ignore_partitions:
+        return data
+    else:
+        partitions = take_partitions(file_path, base_path)
+        return {**partitions, **data}
 
 
-def load_dataset(base_path: str, extension: str, loader_function):
+def load_dataset(base_path: str, extension: str, loader_function, ignore_partitions=False):
     paths = list_files(base_path, extension)
 
     for path in paths:
