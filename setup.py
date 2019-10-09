@@ -1,8 +1,8 @@
 from distutils.core import setup
 
 setup(
-    name='dataset_loader',
-    version='',
+    name='dataset-loader',
+    version='0.1',
     packages=['data'],
     url='',
     license='',
