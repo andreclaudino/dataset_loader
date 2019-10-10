@@ -1,6 +1,11 @@
 ## Data Loader
 A python library to load partitioned data (like in spark data frames).
 
+## Instalation
+To install using pypi:
+
+`pip install dataset-loader`
+
 ## Why this is useful?
 As a Big Data software developer, I usually face huge data sets, its complicated for maintaining and using, once, I have to deal with all data before filter it.
 
