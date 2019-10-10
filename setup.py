@@ -1,4 +1,4 @@
-from distutils.core import setup
+from setuptools import setup
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -12,10 +12,11 @@ setup(
     version='0.1',
     packages=['data_loader'],
     license=license,
+    long_description_content_type="text/markdown",
     long_description=long_description,
     author="André Claudino",
-    long_description_content_type="text/markdown",
     url="https://github.com/andreclaudino/dataset_loader",
-    description="A simple package to load folder partitioned data",
+    description="Load partitioned data from multilevel folder structure",
+    setup_requires=['wheel', 'twine'],
     install_requires=['pandas']
 )
