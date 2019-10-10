@@ -2,7 +2,7 @@ import glob
 import os
 
 
-def list_files(base_path: str, extension: str):
+def _list_files(base_path: str, extension: str):
     """
     List all files in base_path subdirectories with extension
     :param base_path: root path to search files
@@ -16,7 +16,7 @@ def list_files(base_path: str, extension: str):
     return glob.glob(search_path, recursive=True)
 
 
-def take_partitions(file_path, base_path):
+def _take_partitions(file_path, base_path):
     """
     Get a dictionary with partitons in filename
     :param file_path: path fot the file which will take the partitions
@@ -29,7 +29,7 @@ def take_partitions(file_path, base_path):
     return {k: v for k, v in partitions_kv}
 
 
-def load_file(file_path, base_path, loader_function, ignore_partitions):
+def _load_file(file_path, base_path, loader_function, ignore_partitions):
     """
      Merge the result of loading file with loader_function and the partitions
     :param file_path: path to the file which will be loaded
@@ -42,12 +42,12 @@ def load_file(file_path, base_path, loader_function, ignore_partitions):
     if ignore_partitions:
         return data
     else:
-        partitions = take_partitions(file_path, base_path)
+        partitions = _take_partitions(file_path, base_path)
         return {**partitions, **data}
 
 
 def load_dataset(base_path: str, extension: str, loader_function, ignore_partitions=False):
-    paths = list_files(base_path, extension)
+    paths = _list_files(base_path, extension)
 
     for path in paths:
-        yield load_file(path, base_path, loader_function)
+        yield _load_file(path, base_path, loader_function)
