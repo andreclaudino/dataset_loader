@@ -34,7 +34,7 @@ def _load_file(file_path, base_path, loader_function, ignore_partitions):
      Merge the result of loading file with loader_function and the partitions
     :param file_path: path to the file which will be loaded
     :param base_path: begining of path to ignore on partition generating
-    :param loader_function: function which receive file path and returns dictionary with file data
+    :param loader_function: function which receive file path and returns dictionary with file data_loader
     :return:
     """
     data = loader_function(file_path)
@@ -50,4 +50,4 @@ def load_dataset(base_path: str, extension: str, loader_function, ignore_partiti
     paths = _list_files(base_path, extension)
 
     for path in paths:
-        yield _load_file(path, base_path, loader_function)
+        yield _load_file(path, base_path, loader_function, ignore_partitions)
