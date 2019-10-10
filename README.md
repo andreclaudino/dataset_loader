@@ -44,7 +44,7 @@ data_frame = data_source.to_pandas()
 or
 
 ```python
-from data_loader.loader import load_dataset
+from dataset_loader.loader import load_dataset
 
 generator = load_dataset(base_path = "/path/to/data/directory", extension="csv", loader_function, ignore_partitions=False)
 

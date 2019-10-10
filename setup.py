@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -9,8 +9,8 @@ with open("LICENSE", "r") as fh:
 
 setup(
     name='dataset-loader',
-    version='0.1',
-    packages=['data_loader'],
+    version='1.0',
+    packages=find_packages(),
     license=license,
     long_description_content_type="text/markdown",
     long_description=long_description,

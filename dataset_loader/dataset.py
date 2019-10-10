@@ -1,4 +1,4 @@
-from data_loader.loader import load_dataset
+from .loader import load_dataset
 import pandas as pd
 
 class Dataset:
