@@ -67,4 +67,4 @@ def loader_function(filename):
 
 ## Help is needed
 
-Help in developing or increasing the library. Give us a star and 
+Help in developing or increasing the library. Give us a star, open issues and help coding. Every help is welcome.
