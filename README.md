@@ -26,7 +26,7 @@ output
 Softwares like spark write data in this format, but it's difficult to consume for example in tools like pandas, which doesn't have support for partitioned data.
 
 ## How to use
-You just need to import the `from data_loader.loader import load_dataset` function, which returns a generator of dictionaries or the class `data.Dataset`, where data is load, the property `rows` give you a generator (like in `load_dataset`), or the function `.to_pandas()` which gives you a pandas dataframe, both have the same signature.
+You just need to import the `from dataset_loader.loader import load_dataset` function, which returns a generator of dictionaries or the class `data.Dataset`, where data is load, the property `rows` give you a generator (like in `load_dataset`), or the function `.to_pandas()` which gives you a pandas dataframe, both have the same signature.
 
 ```python
 from data import Dataset
