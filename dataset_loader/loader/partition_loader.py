@@ -51,6 +51,16 @@ def _load_file(file_path, base_path, loader_function, ignore_partitions):
 
 def load_dataset(base_path: str, extension: str,
                  loader_function, ignore_partitions=False, filter_function=lambda _: True):
+    """
+    Return a generator for itens on `base_path` loaded by loader_function and filtered by ignore function
+    :param base_path: Folder where files would be loaded
+    :param extension: extension of files to be read
+    :param loader_function: function which receive a path and return a dictionary of loaded item. (path) => dict
+    :param ignore_partitions: if True, ignore partitions on resulting dictionary
+    :param filter_function: A function which operates on each returning dictionary, if True, data is returned on generator
+            else, data is ignored.
+    :return: generator of dictionaries
+    """
     paths = _list_files(base_path, extension)
 
     for path in paths:
