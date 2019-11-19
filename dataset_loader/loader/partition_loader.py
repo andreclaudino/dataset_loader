@@ -39,7 +39,8 @@ def _load_file(file_path, base_path, loader_function, ignore_partitions):
     """
     data = loader_function(file_path)
     if type(data) != dict:
-        raise ValueError(f"Parameter loader_function ({str(loader_function)}) should be a function returning `dict`")
+        raise ValueError(f"Parameter loader_function ({str(loader_function)}) "
+                         f"should be a function returning `dict`, but returned {str(type(data))}")
 
     if ignore_partitions:
         return data
