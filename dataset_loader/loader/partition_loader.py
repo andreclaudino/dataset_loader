@@ -38,6 +38,9 @@ def _load_file(file_path, base_path, loader_function, ignore_partitions):
     :return:
     """
     data = loader_function(file_path)
+    if type(data) != dict:
+        raise ValueError(f"Parameter loader_function ({str(loader_function)}) "
+                         f"should be a function returning `dict`, but returned {str(type(data))}")
 
     if ignore_partitions:
         return data
@@ -46,8 +49,23 @@ def _load_file(file_path, base_path, loader_function, ignore_partitions):
         return {**partitions, **data}
 
 
-def load_dataset(base_path: str, extension: str, loader_function, ignore_partitions=False):
+def load_dataset(base_path: str, extension: str,
+                 loader_function, ignore_partitions=False, filter_function=lambda _: True):
+    """
+    Return a generator for itens on `base_path` loaded by loader_function and filtered by ignore function
+    :param base_path: Folder where files would be loaded
+    :param extension: extension of files to be read
+    :param loader_function: function which receive a path and return a dictionary of loaded item. (path) => dict
+    :param ignore_partitions: if True, ignore partitions on resulting dictionary
+    :param filter_function: A function which operates on each returning dictionary, if True, data is returned on generator
+            else, data is ignored.
+    :return: generator of dictionaries
+    """
     paths = _list_files(base_path, extension)
 
     for path in paths:
-        yield _load_file(path, base_path, loader_function, ignore_partitions)
+        result = _load_file(path, base_path, loader_function, ignore_partitions)
+        if filter_function(result):
+            yield result
+        else:
+            continue

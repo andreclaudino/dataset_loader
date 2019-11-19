@@ -58,7 +58,8 @@ here:
 * `base_path` is the path for the directory containing a partitioned data structure
 * `extension` is the extension of files to load
 * `loader_function` is a function which knows how to load a single file and return in a dictionary format
-* `ignore_partitions`, if `True`, the partitions discovered will not be inserted in data as columns.
+* `ignore_partitions`, if `True`, the partitions discovered will not be inserted in data as columns. (defaults to False)
+* `filter_function`, a function which read resulting dictionary and includes only True resultants on generator. Defaults to `lambda _: True`. 
 
 An example of `loader_function` for numpy *npy* files which contains a single dictionary is:
 
@@ -68,6 +69,12 @@ import numpy as np
 def loader_function(filename):
     data = np.load(filename, allow_pickle=True)
     return data[0]
+```
+
+An example of `filter_function` which ignores all data with value `gx='3'`:
+```python
+def filter_function(loaded_item):
+    return loaded_item['gx'] != '3'
 ```
 
 ## Help is needed
