@@ -1,6 +1,14 @@
 ## Data Loader
 A python library to load partitioned data (like in spark data frames).
 
+# Changelog
+Last version is [1.1](https://pypi.org/manage/project/dataset-loader/settings/) released on *2019/11/18*.
+
+* Add suport for filtering data with `filter_function` on load dataset
+* Add *in code* documentation for `load_dataset` function
+* Now raise an exception if `loader_function` not returning a `dict`, making runtime error finding easier.
+
+
 ## Installation
 To install using pypi:
 
