@@ -1,6 +1,6 @@
 import glob
 import os
-
+import random
 
 def _list_files(base_path: str, extension: str):
     """
@@ -13,6 +13,7 @@ def _list_files(base_path: str, extension: str):
         base_path = base_path[:1]
 
     search_path = os.path.join(base_path, "**", f"*.{extension}")
+
     return glob.glob(search_path, recursive=True)
 
 
@@ -50,7 +51,10 @@ def _load_file(file_path, base_path, loader_function, ignore_partitions):
 
 
 def load_dataset(base_path: str, extension: str,
-                 loader_function, ignore_partitions=False, filter_function=lambda _: True):
+                 loader_function,
+                 ignore_partitions=False,
+                 filter_function=lambda _: True,
+                 randomize=False):
     """
     Return a generator for itens on `base_path` loaded by loader_function and filtered by ignore function
     :param base_path: Folder where files would be loaded
@@ -61,7 +65,11 @@ def load_dataset(base_path: str, extension: str,
             else, data is ignored.
     :return: generator of dictionaries
     """
+
     paths = _list_files(base_path, extension)
+
+    if randomize:
+        paths = random.shuffle(paths)
 
     for path in paths:
         result = _load_file(path, base_path, loader_function, ignore_partitions)
