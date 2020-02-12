@@ -2,6 +2,7 @@ import glob
 import os
 import random
 
+
 def _list_files(base_path: str, extension: str):
     """
     List all files in base_path subdirectories with extension
@@ -10,11 +11,11 @@ def _list_files(base_path: str, extension: str):
     :return: list of files in base_path
     """
     if base_path.endswith(os.sep):
-        base_path = base_path[:1]
+        base_path = base_path[:-1]
 
     search_path = os.path.join(base_path, "**", f"*.{extension}")
 
-    return glob.glob(search_path, recursive=True)
+    return glob.iglob(search_path, recursive=True)
 
 
 def _take_partitions(file_path, base_path):
@@ -39,15 +40,17 @@ def _load_file(file_path, base_path, loader_function, ignore_partitions):
     :return:
     """
     data = loader_function(file_path)
-    if type(data) != dict:
+    if type(data) == dict:
+        data = [data]
+    if type(data) != list:
         raise ValueError(f"Parameter loader_function ({str(loader_function)}) "
-                         f"should be a function returning `dict`, but returned {str(type(data))}")
+                         f"should be a function returning `dict` or list of dict, but returned {str(type(data))}")
 
     if ignore_partitions:
         return data
     else:
         partitions = _take_partitions(file_path, base_path)
-        return {**partitions, **data}
+        return [{**partitions, **row} for row in data]
 
 
 def load_dataset(base_path: str, extension: str,
@@ -63,6 +66,7 @@ def load_dataset(base_path: str, extension: str,
     :param ignore_partitions: if True, ignore partitions on resulting dictionary
     :param filter_function: A function which operates on each returning dictionary, if True, data is returned on generator
             else, data is ignored.
+    :param randomize: if True, shuffle resulting list
     :return: generator of dictionaries
     """
 
@@ -72,8 +76,8 @@ def load_dataset(base_path: str, extension: str,
         paths = random.shuffle(paths)
 
     for path in paths:
-        result = _load_file(path, base_path, loader_function, ignore_partitions)
-        if filter_function(result):
-            yield result
-        else:
-            continue
+        for result in _load_file(path, base_path, loader_function, ignore_partitions):
+            if filter_function(result):
+                yield result
+            else:
+                continue

@@ -1,6 +1,7 @@
 from .loader import load_dataset
 import pandas as pd
 
+
 class Dataset:
 
     def __init__(self, base_path: str, extension: str, loader_function,
