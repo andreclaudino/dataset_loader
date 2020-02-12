@@ -2,11 +2,10 @@
 A python library to load partitioned data (like in spark data frames).
 
 # Changelog
-Last version is [1.2](https://pypi.org/project/dataset-loader/) released on *2019/11/18*.
+Last version is [1.5](https://pypi.org/project/dataset-loader/) released on *2019/11/18*.
 
-* Add suport for filtering data with `filter_function` on load dataset
-* Add *in code* documentation for `load_dataset` function
-* Now raise an exception if `loader_function` not returning a `dict`, making runtime error finding easier.
+* Now loader_function may return a `dict` or a `list of dict`.
+* Correct a bug when base_path ends with a directory separator
 
 
 ## Installation
@@ -39,7 +38,7 @@ You just need to import the `from dataset_loader.loader import load_dataset` fun
 ```python
 from dataset_loader import Dataset
 
-data_source = Dataset(base_path = "/path/to/data/directory", extension="csv", loader_function, ignore_partitions=False)
+data_source = Dataset(base_path = "/path/to/data/directory", extension="csv", loader_function=_loader_function , ignore_partitions=False)
 
 # Print data
 for row in data_source.rows:
@@ -54,7 +53,7 @@ or
 ```python
 from dataset_loader.loader import load_dataset
 
-generator = load_dataset(base_path = "/path/to/data/directory", extension="csv", loader_function, ignore_partitions=False)
+generator = load_dataset(base_path = "/path/to/data/directory", extension="csv", loader_function=_loader_function, ignore_partitions=False)
 
 for row in generator:
     print(row)

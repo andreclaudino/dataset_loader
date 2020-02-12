@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='dataset-loader',
-    version='1.3',
+    version='1.5',
     packages=find_packages(),
     license=license,
     long_description_content_type="text/markdown",
