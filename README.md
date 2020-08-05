@@ -64,7 +64,7 @@ here:
 
 * `base_path` is the path for the directory containing a partitioned data structure
 * `extension` is the extension of files to load
-* `loader_function` is a function which knows how to load a single file and return in a dictionary format
+* `loader_function` is a function which knows how to load a single file and return in a dictionary of list of dictionaries format
 * `ignore_partitions`, if `True`, the partitions discovered will not be inserted in data as columns. (defaults to False)
 * `filter_function`, a function which read resulting dictionary and includes only True resultants on generator. Defaults to `lambda _: True`.
 * `randomize`: if `True`, will randomize itens before returning. Default is `False`.  
